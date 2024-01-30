@@ -2,4 +2,6 @@ src/*.tar
 src/*.tar.gz
 src/*.zip
 
+build/
+
 .DS_Store

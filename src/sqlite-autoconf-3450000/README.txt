@@ -1,4 +1,4 @@
-This package contains:
+xThis package contains:
 
  * the SQLite library amalgamation source code file: sqlite3.c
  * the sqlite3.h and sqlite3ext.h header files that define the C-language

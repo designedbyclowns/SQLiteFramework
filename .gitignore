@@ -1,0 +1,5 @@
+src/*.tar
+src/*.tar.gz
+src/*.zip
+
+.DS_Store

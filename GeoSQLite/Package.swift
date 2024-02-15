@@ -37,15 +37,15 @@ let package = Package(
     targets: [
         .target(
             name: "GeoSQLite",
-            dependencies: ["fullsqlite3"],
+            dependencies: ["libfullsqlite3"],
             swiftSettings: globalSwiftSettings
         ),
         .testTarget(
             name: "GeoSQLiteTests",
-            dependencies: ["GeoSQLite", "fullsqlite3"]
+            dependencies: ["GeoSQLite", "libfullsqlite3"]
         ),
         .binaryTarget(
-            name: "fullsqlite3",
+            name: "libfullsqlite3",
             path: "../fullsqlite3.xcframework.zip"
         )
     ]

@@ -1,5 +1,5 @@
 import Foundation
-//import fullsqlite3
+import libfullsqlite3
 
 struct GeoSQLite {
 }

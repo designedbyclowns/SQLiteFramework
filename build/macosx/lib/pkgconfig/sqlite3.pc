@@ -1,6 +1,6 @@
 # Package Information for pkg-config
 
-prefix=/Users/jeffj/Developer/dbc/SQLiteFramework/build/macosx
+prefix=/Users/heckj/src/SQLiteFramework/build/macosx
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

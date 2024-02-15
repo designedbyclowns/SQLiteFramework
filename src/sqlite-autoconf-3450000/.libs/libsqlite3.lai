@@ -5,16 +5,16 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname=''
+dlname='libsqlite3.0.dylib'
 
 # Names of this library.
-library_names=''
+library_names='libsqlite3.0.dylib libsqlite3.dylib'
 
 # The name of the static archive.
 old_library='libsqlite3.a'
 
 # Linker flags that cannot go in dependency_libs.
-inherited_linker_flags=''
+inherited_linker_flags=' '
 
 # Libraries that this one depends upon.
 dependency_libs=' -lz'
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/Users/jeffj/Developer/dbc/SQLiteFramework/build/iphonesimulator/lib'
+libdir='/Users/heckj/src/SQLiteFramework/build/macosx/lib'

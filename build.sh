@@ -27,7 +27,7 @@ do
  			export CFLAGS="${HOST_FLAGS}"
  			export CXXFLAGS="${HOST_FLAGS}"
 			export LDFLAGS="${HOST_FLAGS}"
-			export CHOST="aarch64-apple-darwin"			
+			export CHOST="aarch64-apple-darwin"
  			;;
  		iphoneos)
 			HOST_FLAGS="-arch arm64 -isysroot ${SDKROOT} -DSQLITE_NOHAVE_SYSTEM"
@@ -59,7 +59,12 @@ do
 	lipo -detailed_info ${INSTALL_DIR}/lib/libsqlite3.a
 done
 
+# clean up the compilation giblets left over in src/latest/
+make distclean
+
 cd $PROJECT_ROOT
+
+echo "▸ Create xcframework"
 
 rm -rf ${BUILD_DIR}/fullsqlite3.xcframework
 rm -f ${PROJECT_DIR}/fullsqlite3.xcframework.zip
@@ -67,19 +72,8 @@ rm -f ${PROJECT_DIR}/fullsqlite3.xcframework.zip
 xcodebuild -create-xcframework \
     -library ${BUILD_DIR}/macosx/lib/libsqlite3.a -headers ${BUILD_DIR}/macosx/include \
    	-library ${BUILD_DIR}/iphoneos/lib/libsqlite3.a -headers ${BUILD_DIR}/iphoneos/include \
+    -library ${BUILD_DIR}/iphonesimulator/lib/libsqlite3.a -headers ${BUILD_DIR}/iphonesimulator/include \
     -output ${BUILD_DIR}/fullsqlite3.xcframework
-#    -library ${BUILD_DIR}/iphonesimulator/lib/libsqlite3.a -headers ${BUILD_DIR}/iphonesimulator/include \
-
-
-## nm - looking at symbols
-## otool -l : more symbols
-## otool -L ./build/iphoneos/lib/libsqlite3.a
-
-#(base) ➜  SQLiteFramework git:(main) ✗ otool -L ./build/macosx/lib/libsqlite3.a
-#Archive : ./build/macosx/lib/libsqlite3.a (architecture x86_64)
-#./build/macosx/lib/libsqlite3.a(sqlite3.o) (architecture x86_64):
-#Archive : ./build/macosx/lib/libsqlite3.a (architecture arm64)
-#./build/macosx/lib/libsqlite3.a(sqlite3.o) (architecture arm64):
 
 echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "${BUILD_DIR}/fullsqlite3.xcframework" "${PROJECT_ROOT}/fullsqlite3.xcframework.zip"

@@ -1,7 +1,8 @@
-src/*.tar
-src/*.tar.gz
-src/*.zip
+build/*
+.vscode
+.swiftpm
+.build
+.DS_STORE
 
-build/
 
-.DS_Store
+fullsqlite3.xcframework.zip

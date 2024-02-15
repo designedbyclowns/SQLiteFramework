@@ -1,4 +1,4 @@
-module libsqlite3 {
+module libfullsqlite3 {
     header "sqlite3.h"
     header "sqlite3ext.h"
     export *

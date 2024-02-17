@@ -1,0 +1,10 @@
+.git*	export-ignore
+.DS_Store	export-ignore
+GeoSQLite/	export-ignore
+README.md	export-ignore
+build.sh	export-ignore
+checksum.txt	export-ignore
+fullsqlite3.xcframework.zip	export-ignore
+module.modulemap	export-ignore
+src/	export-ignore
+

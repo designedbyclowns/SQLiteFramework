@@ -4,5 +4,9 @@ build/*
 .build
 .DS_STORE
 
+src/*.tar
+src/*.gz
+src/*.zip
 
+checksum.txt
 fullsqlite3.xcframework.zip

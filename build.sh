@@ -79,5 +79,5 @@ echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "${BUILD_DIR}/fullsqlite3.xcframework" "${PROJECT_ROOT}/fullsqlite3.xcframework.zip"
 
 echo "▸ Compute checksum"
-openssl dgst -sha256 "${PROJECT_ROOT}/fullsqlite3.xcframework.zip"
+openssl dgst -sha256 "${PROJECT_ROOT}/fullsqlite3.xcframework.zip" | cut -d ' ' -f2 > checksum.txt 
 

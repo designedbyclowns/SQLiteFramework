@@ -58,17 +58,19 @@ do
 	fi
 
 	lipo -detailed_info ${INSTALL_DIR}/lib/libsqlite3.a
+	
 done
 
 # clean up the compilation giblets left over in src/latest/
 make distclean
 
-cd $PROJECT_ROOT
-
+# Assemble XCFramework 
 echo "→ Create xcframework"
+cd $PROJECT_ROOT
 
 rm -rf ${BUILD_DIR}/${FRAMEWORK_NAME}
 rm -f ${PROJECT_DIR}/${FRAMEWORK_NAME}.zip
+rm -f ${PROJECT_DIR}/checksum.txt
 
 xcodebuild -create-xcframework \
     -library ${BUILD_DIR}/macosx/lib/libsqlite3.a -headers ${BUILD_DIR}/macosx/include \
@@ -76,12 +78,26 @@ xcodebuild -create-xcframework \
     -library ${BUILD_DIR}/iphonesimulator/lib/libsqlite3.a -headers ${BUILD_DIR}/iphonesimulator/include \
     -output ${BUILD_DIR}/${FRAMEWORK_NAME}
     
+# Privacy manifest
+if [ -f ${PROJECT_ROOT}/PrivacyInfo.xcprivacy ]
+then
+	echo "→ Include privacy manifest"
+	FRAMEWORK_DIR=${BUILD_DIR}/${FRAMEWORK_NAME}
+	mkdir -p ${FRAMEWORK_DIR}/macos-arm64_x86_64/Versions/A/Resources
+	cp ${PROJECT_ROOT}/PrivacyInfo.xcprivacy ${FRAMEWORK_DIR}/macos-arm64_x86_64/Versions/A/Resources/PrivacyInfo.xcprivacy
+	cp ${PROJECT_ROOT}/PrivacyInfo.xcprivacy ${FRAMEWORK_DIR}/ios-arm64/PrivacyInfo.xcprivacy
+	cp ${PROJECT_ROOT}/PrivacyInfo.xcprivacy ${FRAMEWORK_DIR}/ios-arm64_x86_64-simulator/PrivacyInfo.xcprivacy
+fi
+
+# Code-signing
 echo "→ code-sign the XCFramework"   
 codesign --timestamp -v --sign "Apple Development: Jeff Johnston (7277MSQ5PT)" "${BUILD_DIR}/${FRAMEWORK_NAME}"
 
+# Zip it up
 echo "→ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "${BUILD_DIR}/${FRAMEWORK_NAME}" "${PROJECT_ROOT}/${FRAMEWORK_NAME}.zip"
 
+# Checksum
 echo "→ Compute checksum"
 openssl dgst -sha256 "${PROJECT_ROOT}/${FRAMEWORK_NAME}.zip" | cut -d ' ' -f2 > checksum.txt 
 
